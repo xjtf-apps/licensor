@@ -1,9 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<PackageId>xjtf.licensor.lib</PackageId>
+		<Description>Use to generate licenses for your distributable apps.</Description>
+		<Version>1.0.0</Version>
+		<Authors>Filip Vukovinski</Authors>
+		<Company>xjtf apps</Company>
+		<PackageTags>licensing,encryption,protection,signing</PackageTags>
+		<PackageProjectUrl>https://github.com/xjtf-apps/licensor</PackageProjectUrl>
+	</PropertyGroup>
 
 </Project>
