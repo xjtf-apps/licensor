@@ -5,21 +5,23 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3C8E0EE0-20F3-4283-ADA0-F5ABD845E7A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xjtf.licensor.lib", "src\xjtf.licensor.lib\xjtf.licensor.lib.csproj", "{6B271D75-C7D2-4527-8D56-E8F325E7CC86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xjtf.licensor.lib", "src\xjtf.licensor.lib\xjtf.licensor.lib.csproj", "{6B271D75-C7D2-4527-8D56-E8F325E7CC86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xjtf.protection.lib", "src\xjtf.protection.lib\xjtf.protection.lib.csproj", "{1D84A26F-B2DA-4C07-8868-D58E7B57CFFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xjtf.protection.lib", "src\xjtf.protection.lib\xjtf.protection.lib.csproj", "{1D84A26F-B2DA-4C07-8868-D58E7B57CFFC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7756C962-B2C8-43D4-A2E0-26D18CDB4283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xjtf.licensor", "test\xjtf.licensor\xjtf.licensor.csproj", "{BC84D397-6A7C-40C7-8E08-1A2101E401EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xjtf.licensor", "test\xjtf.licensor\xjtf.licensor.csproj", "{BC84D397-6A7C-40C7-8E08-1A2101E401EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5189DBEC-B6B2-4C67-A3BE-E08BA9571B86}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6B271D75-C7D2-4527-8D56-E8F325E7CC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -35,9 +37,15 @@ Global
 		{BC84D397-6A7C-40C7-8E08-1A2101E401EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC84D397-6A7C-40C7-8E08-1A2101E401EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6B271D75-C7D2-4527-8D56-E8F325E7CC86} = {3C8E0EE0-20F3-4283-ADA0-F5ABD845E7A4}
 		{1D84A26F-B2DA-4C07-8868-D58E7B57CFFC} = {3C8E0EE0-20F3-4283-ADA0-F5ABD845E7A4}
 		{BC84D397-6A7C-40C7-8E08-1A2101E401EE} = {7756C962-B2C8-43D4-A2E0-26D18CDB4283}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47545081-EACB-4C5C-876D-4062ED6715BC}
 	EndGlobalSection
 EndGlobal
