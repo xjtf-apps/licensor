@@ -45,7 +45,7 @@ public static partial class SoftwareProtection
         using var crypto = ECDsa.Create();
         var licenseString = Encoding.UTF8.GetString(licenseBytes);
         var licensePemIndex = licenseString.IndexOf("-----BEGIN PUBLIC KEY-----");
-        var licensePayload = licenseString[..(licensePemIndex + 1)].Replace("-----BEGIN PAYLOAD-----", "").Replace("-----END PAYLOAD-----", "");
+        var licensePayload = licenseString[..licensePemIndex].Replace("-----BEGIN PAYLOAD-----", "").Replace("-----END PAYLOAD-----", "");
         var licensePem = licenseString[licensePemIndex..];
         crypto.ImportFromPem(licensePem);
 

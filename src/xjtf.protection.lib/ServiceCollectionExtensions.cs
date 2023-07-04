@@ -6,7 +6,7 @@ public static class ServiceCollectionExtensions
 {
     public static void AddSoftwareProtection(this IServiceCollection services)
     {
-        services.AddSingleton<ILicenseReader>();
+        //services.AddSingleton<ILicenseReader>();
         services.AddSingleton<ILicenseStore, LicenseStore>();
         services.AddTransient<ILicenseAccessor, LicenseAccessor>();
     }

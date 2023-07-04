@@ -14,7 +14,7 @@ public static partial class SoftwareProtection
 
     public sealed class ExpiringLicenseDuration : LicenseDuration
     {
-        private readonly DateTime ExpiresUTC;
+        public readonly DateTime ExpiresUTC;
         public override bool IsValidCurrently() => ExpiresUTC > DateTime.UtcNow;
         public ExpiringLicenseDuration(DateTime expiresUTC) => ExpiresUTC = expiresUTC;
     }
