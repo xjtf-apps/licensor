@@ -13,5 +13,7 @@ public static partial class SoftwareProtection
             Duration = duration;
             Features = features;
         }
+
+        public static readonly License Invalid = new(new ExpiredLicenseDuration(), new List<EnabledFeature>());
     }
 }

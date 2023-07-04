@@ -1,4 +1,6 @@
-﻿namespace xjtf.protection.lib;
+﻿using System.Text.Json;
+
+namespace xjtf.protection.lib;
 
 public static partial class SoftwareProtection
 {
@@ -22,19 +24,60 @@ public static partial class SoftwareProtection
             if (license == null)
             {
                 var keyBytes = licenseReader.ReadUtf8LicenseBytes();
-                license = DecodeLicenseFromKey(keyBytes);
+                license = DecodeLicenseContents(keyBytes);
                 licenseStore.SetLicense(license);
             }
 
             _license = licenseStore.GetLicense();
         }
 
-        public LicenseDuration Duration => _license?.Duration ?? new ExpiredLicense();
+        public LicenseDuration Duration => _license?.Duration ?? new ExpiredLicenseDuration();
         public IReadOnlyList<EnabledFeature> Features => _license?.Features ?? new List<EnabledFeature>();
     }
 
-    internal static License DecodeLicenseFromKey(byte[] keyBytes)
+    internal static License DecodeLicenseContents(byte[] licenseBytes)
     {
-        throw new NotImplementedException();
+        // -----BEGIN PAYLOAD-----
+        // -----END PAYLOAD-----
+        // -----BEGIN PUBLIC KEY-----
+        // -----END PUBLIC KEY-----
+
+        using var crypto = ECDsa.Create();
+        var licenseString = Encoding.UTF8.GetString(licenseBytes);
+        var licensePemIndex = licenseString.IndexOf("-----BEGIN PUBLIC KEY-----");
+        var licensePayload = licenseString[..(licensePemIndex + 1)].Replace("-----BEGIN PAYLOAD-----", "").Replace("-----END PAYLOAD-----", "");
+        var licensePem = licenseString[licensePemIndex..];
+        crypto.ImportFromPem(licensePem);
+
+        var licensePayloadContents =
+            JsonSerializer.Deserialize<Dictionary<string, string>>(Encoding.UTF8.GetString(Convert.FromBase64String(licensePayload)))!;
+        var licensePayloadSignature =
+            Convert.FromBase64String(licensePayloadContents["Signature"]);
+        var licenseExpiry =
+            licensePayloadContents["ValidUntil"] == "Indefinite"
+            ? (DateTime?)null : DateTime.Parse(licensePayloadContents["ValidUntil"]);
+
+        var signingPayloadBytes =
+            Encoding.UTF8.GetBytes(
+                JsonSerializer.Serialize(
+                    licensePayloadContents
+                        .Where(kvp => kvp.Key != "Signature")
+                            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value), new JsonSerializerOptions() { WriteIndented = true }));
+
+
+        if (crypto.VerifyData(signingPayloadBytes, licensePayloadSignature!, HashAlgorithmName.SHA256))
+        {
+            var licenseDuration = licenseExpiry == null
+                ? (LicenseDuration)new IndefiniteLicenseDuration()
+                : new ExpiringLicenseDuration((DateTime)licenseExpiry);
+
+            var features = licensePayloadContents
+                .Where(kvp => kvp.Key != "Signature" && kvp.Key != "ValidUntil")
+                .Select(kvp => new EnabledFeature(kvp.Key, kvp.Value))
+                .ToList();
+
+            return new License(licenseDuration, features);
+        }
+        else throw new InvalidDataException("The cryptographic signature of the license payload cannot be verified!");
     }
 }
